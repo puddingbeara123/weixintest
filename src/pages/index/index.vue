@@ -18,7 +18,7 @@
   indicator-active-color="#F8F9F9">
   <block v-for="(item,index) in imgUrls" :key="index">
     <swiper-item>
-      <image :src="item" class="slide-image" mode="aspectfill"></image>
+      <image :src="item.image_src" class="slide-image" mode="aspectfill"></image>
     </swiper-item>
   </block>
 </swiper>
@@ -27,142 +27,92 @@
       <block
       v-for="(item,index) in cate"  :key="index">
       <image
-        :src="item" class="nav-image"
+        :src="item.image_src" class="nav-image"
         mode="aspectfill">
       </image>
-         
       </block>
    </view>
    <!-- 4.0 楼层 -->
+   <block v-for="(item,index) in floor" :key="index">
    <view class="space"></view>
    <view class="floor">
       <view class="floor-title">
         <image 
-          src="https://lg-igjc8p1o-1256763078.cos.ap-shanghai.myqcloud.com/upload/pic_floor01_title.png"
+          :src="item.floor_title.image_src"
          mode="aspectfill">
         </image>
       </view>
       <view class="floor-img">
-        <view class="imgLeft">
-          <image
-            src="https://lg-igjc8p1o-1256763078.cos.ap-shanghai.myqcloud.com/upload/pic_floor01_1@2x.png"
-             mode="aspectfill">
-          </image>
+
+        <block v-for="(subItem,subIndex) in item.product_list" :key="subIndex">
+          <block v-if="subItem.image_width==='232'">
+        <view class="imgLeft" >
+          <navigator :url="subItem.navigator_url" :open-type="open_type" hover-class="none">
+          <image  :src="subItem.image_src" mode="aspectfill"></image>
+          </navigator>
         </view>
+           </block>
+        </block>
+        
+        <view class="buju">
+        <block v-for="(subItem,subIndex) in item.product_list" :key="subIndex" >
+        <block v-if="subItem.image_width!=='232'" >
         <view class="imgRight">
-          <image
-            src="https://lg-igjc8p1o-1256763078.cos.ap-shanghai.myqcloud.com/upload/pic_floor01_2@2x.png"
-             mode="aspectfill">
-          </image>
-           <image
-            src="https://lg-igjc8p1o-1256763078.cos.ap-shanghai.myqcloud.com/upload/pic_floor01_3@2x.png"
-             mode="aspectfill">
-          </image>
-           <image
-            src="https://lg-igjc8p1o-1256763078.cos.ap-shanghai.myqcloud.com/upload/pic_floor01_4@2x.png"
-             mode="aspectfill">
-          </image>
-           <image
-            src="https://lg-igjc8p1o-1256763078.cos.ap-shanghai.myqcloud.com/upload/pic_floor01_5@2x.png"
-             mode="aspectfill">
+          <navigator
+            :url="subItem.navigator_url"
+            :open-type="subItem.open_type"
+            hover-class="none">
+          </navigator>
+          <image :src="subItem.image_src" mode="aspectfill">
           </image>
         </view>
+        </block>
+        </block>
+      </view>
       </view>
    </view>
-
-  <view class="space"></view>
-   <view class="floor">
-      <view class="floor-title">
-        <image 
-          src="https://lg-igjc8p1o-1256763078.cos.ap-shanghai.myqcloud.com/upload/pic_floor01_title.png"
-         mode="aspectfill">
-        </image>
-      </view>
-      <view class="floor-img">
-        <view class="imgLeft">
-          <image
-            src="https://lg-igjc8p1o-1256763078.cos.ap-shanghai.myqcloud.com/upload/pic_floor01_1@2x.png"
-             mode="aspectfill">
-          </image>
-        </view>
-        <view class="imgRight">
-          <image
-            src="https://lg-igjc8p1o-1256763078.cos.ap-shanghai.myqcloud.com/upload/pic_floor01_2@2x.png"
-             mode="aspectfill">
-          </image>
-           <image
-            src="https://lg-igjc8p1o-1256763078.cos.ap-shanghai.myqcloud.com/upload/pic_floor01_3@2x.png"
-             mode="aspectfill">
-          </image>
-           <image
-            src="https://lg-igjc8p1o-1256763078.cos.ap-shanghai.myqcloud.com/upload/pic_floor01_4@2x.png"
-             mode="aspectfill">
-          </image>
-           <image
-            src="https://lg-igjc8p1o-1256763078.cos.ap-shanghai.myqcloud.com/upload/pic_floor01_5@2x.png"
-             mode="aspectfill">
-          </image>
-        </view>
-      </view>
-   </view>
-
-<view class="space"></view>
-   <view class="floor">
-      <view class="floor-title">
-        <image 
-          src="https://lg-igjc8p1o-1256763078.cos.ap-shanghai.myqcloud.com/upload/pic_floor01_title.png"
-         mode="aspectfill">
-        </image>
-      </view>
-      <view class="floor-img">
-        <view class="imgLeft">
-          <image
-            src="https://lg-igjc8p1o-1256763078.cos.ap-shanghai.myqcloud.com/upload/pic_floor01_1@2x.png"
-             mode="aspectfill">
-          </image>
-        </view>
-        <view class="imgRight">
-          <image
-            src="https://lg-igjc8p1o-1256763078.cos.ap-shanghai.myqcloud.com/upload/pic_floor01_2@2x.png"
-             mode="aspectfill">
-          </image>
-           <image
-            src="https://lg-igjc8p1o-1256763078.cos.ap-shanghai.myqcloud.com/upload/pic_floor01_3@2x.png"
-             mode="aspectfill">
-          </image>
-           <image
-            src="https://lg-igjc8p1o-1256763078.cos.ap-shanghai.myqcloud.com/upload/pic_floor01_4@2x.png"
-             mode="aspectfill">
-          </image>
-           <image
-            src="https://lg-igjc8p1o-1256763078.cos.ap-shanghai.myqcloud.com/upload/pic_floor01_5@2x.png"
-             mode="aspectfill">
-          </image>
-        </view>
-      </view>
-   </view>
-
+   </block>
   </view>
   
-  
-  
+
 </template>
 
 <script>
 export default {
  data: {
-    imgUrls: [
-      'https://lg-igjc8p1o-1256763078.cos.ap-shanghai.myqcloud.com/upload/banner1.png',
-      'https://lg-igjc8p1o-1256763078.cos.ap-shanghai.myqcloud.com/upload/banner2.png',
-      'https://lg-igjc8p1o-1256763078.cos.ap-shanghai.myqcloud.com/upload/banner3.png'
-    ],
-    cate:[
-     "https://lg-igjc8p1o-1256763078.cos.ap-shanghai.myqcloud.com/upload/icon_index_nav_4@2x.png",
-     "https://lg-igjc8p1o-1256763078.cos.ap-shanghai.myqcloud.com/upload/icon_index_nav_3@2x.png",
-     "https://lg-igjc8p1o-1256763078.cos.ap-shanghai.myqcloud.com/upload/icon_index_nav_2@2x.png",
-     "https://lg-igjc8p1o-1256763078.cos.ap-shanghai.myqcloud.com/upload/icon_index_nav_1@2x.png"
-    ]
+    imgUrls: [],
+    cate:[],
+    floor:[]
   },
+  onLoad(){
+    // console.log("123")
+    // 轮播图
+    wx.request({
+        url: "https://zhengzhicheng.cn/api/public/v1/home/swiperdata",
+        success: (res) => {
+          // console.log(res);
+           this.imgUrls= res.data.message;  
+        }
+ })
+//  导航栏
+   wx.request({ 
+        url: "https://zhengzhicheng.cn/api/public/v1/home/catitems",
+        success: (res) => {
+          // console.log(res);
+           this.cate= res.data.message;  
+        }
+ })
+//  楼层
+   wx.request({ 
+        url: "https://zhengzhicheng.cn/api/public/v1/home/floordata",
+        success: (res) => {
+          console.log(res);
+          this.floor= res.data.message; 
+          // console.log(this.floor.product_list);
+         
+        }
+ })
+  }
 };
 </script>
 
@@ -198,7 +148,7 @@ height:340rpx;
 .nav-bar{
   display:flex;
   justify-content: space-around;
-  align-items: center;
+  align-items: center; 
   padding:15rpx 0rpx;
 }
 .floor-title image{
@@ -214,16 +164,28 @@ height:340rpx;
 .floor-img{
   display: flex;
   /* justify-content: space-between; */
-  padding:10rpx 0rpx 10rpx 16rpx;
+  padding: 10rpx 0 10rpx 20rpx;
+  box-sizing:border-box;
+  
 }
 .imgLeft image{
   height:386rpx;
   width:232rpx;
-  margin-right:12rpx;
+  margin-right:10rpx;
 }
 .imgRight image{
   height:188rpx;
-  width:233rpx;
-    margin-right:12rpx;
+   width:233rpx; 
+  margin-right:10rpx;
+  /* flex:1; */
+ 
 }
+.buju{
+ 
+  flex-wrap: wrap;
+  display:flex; 
+ 
+ 
+} 
+
 </style>
