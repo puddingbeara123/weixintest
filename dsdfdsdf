@@ -1,0 +1,53 @@
+[33mcommit 8b468d275e4b54ad6f66bb5267a455d67ee3f761[m[33m ([m[1;36mHEAD -> [m[1;32mmaster[m[33m, [m[1;31morigin/master[m[33m)[m
+Author: frieda <291284353@qq.com>
+Date:   Mon Mar 18 19:49:21 2019 +0800
+
+    设置分类页面跳转goodlist页面
+
+[33mcommit 271e62b99ab1f0e05820f899daf5ae9ee5a5b78f[m
+Author: frieda <291284353@qq.com>
+Date:   Mon Mar 18 19:36:28 2019 +0800
+
+    分类页面渲染完成
+
+[33mcommit fa53e880a7dd9f3d640840a00664327a0ac0c237[m
+Author: frieda <291284353@qq.com>
+Date:   Mon Mar 18 18:55:54 2019 +0800
+
+    分类页面的结构初步完成
+
+[33mcommit 60033d8c4b12d21c61e3043fc98e27069918f19c[m
+Author: frieda <291284353@qq.com>
+Date:   Mon Mar 18 10:42:03 2019 +0800
+
+    封装了search组件
+
+[33mcommit b1da47257884d45dc097ed0b6e6e69882c6b9a9c[m
+Author: frieda <291284353@qq.com>
+Date:   Sun Mar 17 01:02:13 2019 +0800
+
+    首页渲染完成
+
+[33mcommit 9a3cf8e259786103cac1d8850a0fcbb0af9444dd[m
+Author: frieda <291284353@qq.com>
+Date:   Sat Mar 16 20:51:35 2019 +0800
+
+    完成首页初始版
+
+[33mcommit 0b166887f849fb27c6b72b3537bfcb645ad675a2[m
+Author: frieda <291284353@qq.com>
+Date:   Sat Mar 16 19:17:27 2019 +0800
+
+    上存github-text
+
+[33mcommit 45648e41c36802e86402cca2eefcd0ff640f7264[m
+Author: frieda <291284353@qq.com>
+Date:   Sat Mar 16 16:09:06 2019 +0800
+
+    搜索框更改
+
+[33mcommit 513d20df05964a8ce2568a19863c4874d79303ca[m
+Author: frieda <291284353@qq.com>
+Date:   Sat Mar 16 16:05:44 2019 +0800
+
+    1.0初始化布局
