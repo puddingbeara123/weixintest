@@ -1,11 +1,12 @@
 <template>
   <view>
     <!-- 1.搜索导航 -->
-    <navigator class="searchInput" url="pages/search/main">
+    <!-- <navigator class="searchInput" hover-class="none"  url="../pages/search/main">
       <view class="search-in">
         <icon type="search" class="search-icon" size="20"/>搜索
       </view>
-    </navigator>
+    </navigator> -->
+    <app-search></app-search>
 
     <!-- 2.0轮播图 -->
     <swiper
@@ -78,11 +79,17 @@
 </template>
 
 <script>
+// 引入组件
+import Search from "../../components/Search";
+
 export default {
  data: {
     imgUrls: [],
     cate:[],
     floor:[]
+  },
+  components:{
+    "app-search":Search,
   },
   onLoad(){
     // console.log("123")
