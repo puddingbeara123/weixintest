@@ -3,22 +3,28 @@
     <app-search></app-search>
   
     <view class="scrollAll">
-      <view class="scrollLeft">
-        <block v-for="(item,index) in [1,2,3,1,4,5,4,4,7,5,7,9,7,5,4,1,4,5,2]" :key="index">
-          <view class="item" :class="{ active : index === tabIndex }" @tap="changeTabs(index)">大家电</view>
+
+      <scroll-view   scroll-y class="scrollLeft">
+        <block v-for="(item,index) in scrollLeftdata" :key="index">
+          <view class="item" :class="{ active : index === tabIndex }" @tap="changeTabs(index)">{{item.cat_name}}</view>
         </block>
-      </view>
-      <view class="scrollRight">
-        <view class="scrollRight-title">电视机</view>
-         <view class="scrollRight-list">
-          <block v-for="(item,index) in [1,2,3,1,4,5,4,4,7,5,7,9,7,5,4,1,4,5,2]" :key="index">
+      </scroll-view>
+
+      <scroll-view  scroll-y class="scrollRight">
+        <block v-for="(item,index) in scrollRightData" :key="index">
+           <view class="scrollRight-title">{{item.cat_name}}</view>
+           <view class="scrollRight-list">
+             <block v-for="(subItem,subIndex) in item.children" :key="subIndex">
               <view class="scrollRight-list-item">
-                  <image class="scrollRight-image" src="https://img.alicdn.com/imgextra/i4/17971277/O1CN011LIuFRe38gnZqZl_!!0-saturn_solar.jpg_220x220.jpg_.webp"></image>
-                  <view>分类名称</view>
+                  <image class="scrollRight-image" :src="subItem.cat_icon"></image>
+                  <view>{{subItem.cat_name}}</view>
               </view>
+             </block>
+           </view>
          </block>
-        </view>
-      </view>
+      </scroll-view>
+
+
     </view>
     
   </view>
@@ -28,17 +34,27 @@
 // 引入组件
 import Search from "../../components/Search";
 import request from "../../utils/request";
-console.log(request)
+// console.log(request)
 
 export default {
   data(){
     return{
-        tabIndex: 0
+        tabIndex: 0,
+        scrollLeftdata:[],
+        scrollRightData:[]
+
     }
   },
   onLoad(){
+    wx.showLoading({
+     title: '客官稍等~',
+    }),
     request("https://www.zhengzhicheng.cn/api/public/v1/categories").then((res)=>{
-      console.log(res);
+      // console.log(res);
+      this.scrollLeftdata=res.data.message; //渲染左边的菜单栏
+        // console.log(this.scrollLeftdata); 
+        this.scrollRightData=this.scrollLeftdata[this.tabIndex].children;//渲染右边的子菜单
+         wx.hideLoading();
     })
   },
 
@@ -46,8 +62,13 @@ export default {
     "app-search": Search
   },
   methods:{
+    // 点击左边的菜单栏带动右边的子菜单显示
       changeTabs(index){
       this.tabIndex = index;
+      this.scrollRightData=[];//先清空右侧的菜单栏
+      setTimeout(()=>{  // 2. 赋值阶段，利用定时器让数据清空后再赋值
+        this.scrollRightData=this.scrollLeftdata[this.tabIndex].children;
+      },0)
     }
   }
 };
