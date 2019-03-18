@@ -54,6 +54,7 @@ export default {
       this.scrollLeftdata=res.data.message; //渲染左边的菜单栏
         // console.log(this.scrollLeftdata); 
         this.scrollRightData=this.scrollLeftdata[this.tabIndex].children;//渲染右边的子菜单
+        console.log(this.scrollRightData);
          wx.hideLoading();
     })
   },

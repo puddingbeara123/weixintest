@@ -39,10 +39,10 @@
 					"scene": null
 				},
 				{
-					"id": -1,
+					"id": 1,
 					"name": "搜索页面",
 					"pathName": "pages/goodList/main",
-					"query": "keyword=曲面电视",
+					"query": "keyword=小米",
 					"scene": null
 				}
 			]
