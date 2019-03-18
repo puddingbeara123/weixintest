@@ -15,7 +15,7 @@
            <view class="scrollRight-title">{{item.cat_name}}</view>
            <view class="scrollRight-list">
              <block v-for="(subItem,subIndex) in item.children" :key="subIndex">
-              <view class="scrollRight-list-item">
+              <view class="scrollRight-list-item" @tap="gotoGoodList(subItem.cat_name)">
                   <image class="scrollRight-image" :src="subItem.cat_icon"></image>
                   <view>{{subItem.cat_name}}</view>
               </view>
@@ -69,6 +69,9 @@ export default {
       setTimeout(()=>{  // 2. 赋值阶段，利用定时器让数据清空后再赋值
         this.scrollRightData=this.scrollLeftdata[this.tabIndex].children;
       },0)
+    },
+    gotoGoodList(name){
+       wx.navigateTo({url:'/pages/goodList/main?keyword='+name})
     }
   }
 };
