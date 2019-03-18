@@ -1,6 +1,6 @@
 <<template>
     <!-- 1.搜索导航 -->
-    <navigator class="searchInput" hover-class="none"  url="../pages/search/main">
+    <navigator class="searchInput" hover-class="none"  url="/pages/search/main">
       <view class="search-in">
         <icon type="search" class="search-icon" size="20"/>搜索
       </view>
