@@ -14,7 +14,12 @@ function request(url,data={},header={},method="GET"){
         })
     })
 }
-// request.get=function(url,data){
-//     return request(url,data);
-// }
+request.baseUrl="https://www.zhengzhicheng.cn/api/public/v1/";
+
+request.get=function(url,data){
+    return request(request.baseUrl+url,data,{},"GET");
+}
+request.post=function(url,data){
+    return request(request.baseUrl+url,data,{},"POST");
+}
 export default request;

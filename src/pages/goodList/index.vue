@@ -30,6 +30,9 @@
      </block>
      
    </view>
+
+   <!-- 没有数据的提示 -->
+   <view class="loading" v-show="!hasMore">到底了...</view>
      
   </view>
    
@@ -37,7 +40,8 @@
 
 <script>
 // 引入组件
-import request from "../../utils/request";
+import { getSearch } from "@/api/index";
+console.log(getSearch);
 
 export default {
  data() {
@@ -46,29 +50,46 @@ export default {
      tabItem:["综合","销量","价格"],
      tabIndex:0,
      goodsDetail:[],
+     pagenum:1,
+     pagesize:20,
+     hasMore: true
     }
   },
   onLoad(option){
    
-    console.log(option.keyword)
+    
      this.keyword=option.keyword;
-     const data={
-      query: this.keyword
-     }
-    //  console.log(data)
-     request("https://www.zhengzhicheng.cn/api/public/v1/goods/search", data).then((res)=>{
-       console.log(res);
-       this.goodsDetail=res.data.message.goods
-       console.log(this.goodsDetail);
-
-     })
+     this.getData();
+    
 
   },
   methods:{
    changeTabs(index){
      this.tabIndex=index;
+   },
+   getData(){
+     getSearch({
+        query: this.keyword,
+        pagenum: this.pagenum,
+        pagesize: this.pagesize
+     }).then(res =>{
+       let { goods } = res.data.message;
+      //  console.log(goods);
+        this.goodsDetail = [...this.goodsDetail,...goods];
+
+        this.pagenum++;
+
+        if(goods.length<this.pagesize){
+          this.hasMore = false;
+        }
+     })
    }
   },
+   // 页面触底事件
+  onReachBottom(){
+        // 页面触底的时候页调用获取数据的函数
+    this.getData();
+  }
   // filters: {
   //   tofixed: function(val) {
   //     return Number(val).toFixed(2);
@@ -129,5 +150,11 @@ export default {
       color:#ff2d4a;
     }
   }
+}
+.loading{
+   line-height: 80rpx;
+    text-align: center;
+    font-size:14px;
+    color:#999;
 }
 </style>

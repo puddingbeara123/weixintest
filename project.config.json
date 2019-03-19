@@ -42,7 +42,7 @@
 					"id": 1,
 					"name": "搜索页面",
 					"pathName": "pages/goodList/main",
-					"query": "keyword=小米",
+					"query": "keyword=小",
 					"scene": null
 				}
 			]
