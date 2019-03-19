@@ -18,18 +18,17 @@
 
    <!-- 综合 -->
    <view class="goodsDetail">
-     <!-- <block v-for="(item,index) in goodsDetail" :key="index" > -->
+
+      <block v-for="(item,index) in goodsDetail" :key="index" >
        <view class="box">
-         <image src="http://image4.suning.cn/uimg/b2c/newcatentries/0000000000-000000000152287756_2_200x200.jpg"></image>
+         <image :src="item.goods_small_logo"></image>
          <view class="box-right">
-            <view class="title">小米（MI）米家压力IH电饭煲 智能烹饪 压力IH电磁环绕加热 手机智能预约 3L黄金容量 灰铸铁内胆</view>
-            <view class="price">￥<text>221{{ssss| tofixed}}</text></view>
-            
+            <view class="title">{{item.goods_name}}</view>
+            <view class="price">￥<text>{{item.goods_price}}.00</text></view>
          </view>
       </view>
-     <!-- </block> -->
+     </block>
      
-
    </view>
      
   </view>
@@ -46,6 +45,7 @@ export default {
      keyword:"",
      tabItem:["综合","销量","价格"],
      tabIndex:0,
+     goodsDetail:[],
     }
   },
   onLoad(option){
@@ -58,6 +58,9 @@ export default {
     //  console.log(data)
      request("https://www.zhengzhicheng.cn/api/public/v1/goods/search", data).then((res)=>{
        console.log(res);
+       this.goodsDetail=res.data.message.goods
+       console.log(this.goodsDetail);
+
      })
 
   },
@@ -66,12 +69,13 @@ export default {
      this.tabIndex=index;
    }
   },
-    filters: {
-    tofixed: function(data) {
-      return Number(data).toFixed(2);
-    }
-  }
+  // filters: {
+  //   tofixed: function(val) {
+  //     return Number(val).toFixed(2);
+  //   }
+  // }
 };
+
 </script>
 
 <style lang="scss" >
@@ -120,6 +124,9 @@ export default {
     -webkit-box-orient:vertical;    
     -webkit-line-clamp:2; 
     margin:20rpx;
+    }
+    .price{
+      color:#ff2d4a;
     }
   }
 }
