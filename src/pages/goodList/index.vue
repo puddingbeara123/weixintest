@@ -41,7 +41,7 @@
 <script>
 // 引入组件
 import { getSearch } from "@/api/index";
-console.log(getSearch);
+// console.log(getSearch);
 
 export default {
  data() {
@@ -56,18 +56,24 @@ export default {
     }
   },
   onLoad(option){
-   
-    
      this.keyword=option.keyword;
      this.getData();
-    
-
+  },
+  onUnload(){
+    this.initData()
   },
   methods:{
+    // 切换tab栏
    changeTabs(index){
      this.tabIndex=index;
    },
+     //  渲染数据封装
    getData(){
+    //  还没有到底的时候，要隐藏
+     if(!this.hasMore) return;
+     wx.showLoading({
+       title: '加载中...',
+      })
      getSearch({
         query: this.keyword,
         pagenum: this.pagenum,
@@ -82,19 +88,31 @@ export default {
         if(goods.length<this.pagesize){
           this.hasMore = false;
         }
+        // 数据加载完成后，隐藏加载框
+          wx.hideLoading()
+        // 把下拉刷新动画页停止
+         wx.stopPullDownRefresh();
+
      })
+   },
+   // 初始化 data 数据
+   initData(){
+     this.pagenum = 1;
+     this.hasMore = true;
+     this.goodsDetail=[];
    }
+  },
+  onPullDownRefresh(){
+    //  6.0.1 初始化页面数据
+    this.initData();
+      //  6.0.2 重新请求数据
+    this.getData();
   },
    // 页面触底事件
   onReachBottom(){
         // 页面触底的时候页调用获取数据的函数
     this.getData();
   }
-  // filters: {
-  //   tofixed: function(val) {
-  //     return Number(val).toFixed(2);
-  //   }
-  // }
 };
 
 </script>
