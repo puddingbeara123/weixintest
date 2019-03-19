@@ -1,7 +1,7 @@
 <template>
   <view>
    <!-- 商品搜索框 -->
-   <view class="searchWrap">
+   <view class="searchWrap" @tap="gotoSearch(keyword)">
       <view class="searchInput">
          <icon type="search" class="searchIcon" size="20"/>
          <text>{{keyword}}</text>
@@ -20,7 +20,7 @@
    <view class="goodsDetail">
 
       <block v-for="(item,index) in goodsDetail" :key="index" >
-       <view class="box">
+       <view class="box" @tap="gotoDetail(item.goods_id)">
          <image :src="item.goods_small_logo"></image>
          <view class="box-right">
             <view class="title">{{item.goods_name}}</view>
@@ -100,8 +100,18 @@ export default {
      this.pagenum = 1;
      this.hasMore = true;
      this.goodsDetail=[];
-   }
+   },
+  //  跳转到搜索页面
+  gotoSearch(keyword){
+      wx.redirectTo({url:'/pages/search/main?keyword='+keyword})
   },
+  //按微信页面的返回按钮是出栈 路由会自动减少一个页面，只有请求新的页面才算是一个路由一个新数据
+  // 跳转到商品详情页
+  gotoDetail(id){   
+    wx.navigateTo({url:'/pages/goodsDetail/main?id='+id})
+  },
+  }, 
+  //下拉更新
   onPullDownRefresh(){
     //  6.0.1 初始化页面数据
     this.initData();
