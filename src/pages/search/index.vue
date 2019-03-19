@@ -6,11 +6,22 @@
         <icon type="search" size="32rpx"></icon>
         <input type="text" 
           :placeholder="keyword"
-          v-model="inputVal" 
-          />
+          v-model="inputVal" @confirm="inputSumbit"/>
       </view>
-      <button class="cancel" size="mini" v-show="inputVal" @tap="clearInput">取消</button>
+      <button class="cancel" size="mini" @tap="clearInput">取消</button>
     </view>
+    <!-- 2.0.1 搜索历史 -->
+    <view class="history-title" v-show="history.length > 0">
+      <text>历史搜索</text>
+      <icon type="clear" size="30rpx" @tap="removeHistory"></icon>
+    </view>
+     <!-- 2.0.2 历史列表 -->
+    <view class="history-list">
+      <block v-for="(item,index) in history" :key="index">
+        <view @tap="gotoGoodsList(item)" class="history-list-item">{{ item }}</view>
+      </block>
+    </view>
+
    </view>
 </template>
 
@@ -20,13 +31,35 @@ export default {
   data () {
     return{
       keyword:'',
+      inputVal:'',
+      history:[]
     }
   },
   onLoad(query){
     this.keyword=query.keyword;
-    console.log(this.keyword);
-  }
- 
+    // console.log(this.keyword);
+  },
+  onShow(){
+    this.history = wx.getStorageSync('history') || [];
+  },
+ methods:{
+  //  输入框添加历史记录
+   inputSumbit(){
+    //  console.log(this.inputVal)
+    this.history.unshift(this.inputVal);
+    // 1.0.2 把历史存到本地
+    wx.setStorageSync('history', this.history);
+   },
+   removeHistory(){
+    // 2.0.1 清空视图的数据
+      this.history = [];
+    // 2.0.2 移除本地存储的历史
+    wx.removeStorageSync('history');
+   },
+   clearInput(){
+     this.inputVal = '';
+   }
+ }
 }
 </script>
 
