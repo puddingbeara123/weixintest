@@ -6,9 +6,9 @@
         <icon type="search" size="32rpx"></icon>
         <input type="text" 
           :placeholder="keyword"
-          v-model="inputVal" @confirm="inputSumbit"/>
+          v-model="inputVal" @confirm="inputSumbit"  @input="inputHandle"/>
       </view>
-      <button class="cancel" size="mini" @tap="clearInput">取消</button>
+      <button class="cancel" size="mini" v-show="inputVal" @tap="clearInput">取消</button>
     </view>
     <!-- 2.0.1 搜索历史 -->
     <view class="history-title" v-show="history.length > 0">
@@ -21,18 +21,29 @@
         <view @tap="gotoGoodsList(item)" class="history-list-item">{{ item }}</view>
       </block>
     </view>
+    
+     <!-- 3.0 搜索提示 -->
+    <view class="search-tips" v-show="true">
+      <block v-for="(item,index) in tips" :key="index">
+        <view class="search-tips-item" @tap="gotoGoodsDetail(item.goods_id)">
+          {{ item.goods_name }}
+        </view>
+      </block>
+    </view>
 
    </view>
 </template>
 
 <script>
-
+import { getTips } from "@/api";
+// console.log(getTips);
 export default {
   data () {
     return{
       keyword:'',
       inputVal:'',
-      history:[]
+      history:[],
+      tips:[]
     }
   },
   onLoad(query){
@@ -56,8 +67,22 @@ export default {
     // 2.0.2 移除本地存储的历史
     wx.removeStorageSync('history');
    },
+   gotoGoodsList(keyword){
+      wx.redirectTo({ url: '/pages/goodList/main?keyword='+ keyword });
+   },
    clearInput(){
      this.inputVal = '';
+   },
+   inputHandle(){
+      getTips({
+        query: this.inputVal
+      }).then(res=>{
+        this.tips = res.data.message;
+      })
+   },
+   gotoGoodsDetail(id){
+      // 点击跳转商品详情页
+      wx.navigateTo({ url: '/pages/goodsDetail/main?goods_id='+id });
    }
  }
 }
