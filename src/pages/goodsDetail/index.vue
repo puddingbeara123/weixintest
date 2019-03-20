@@ -2,22 +2,22 @@
   <view>
        <!-- 1.0 轮播图模块 -->
     <swiper indicator-dots autoplay circular>
-        <block v-for="(item,index) in [1,2,3]" :key="index">
+        <block v-for="(item,index) in detail.pics" :key="index">
             <swiper-item>
-                <image class="slide-image" mode="aspectFill" src="https://img.alicdn.com/simba/img/TB1xaMSDgDqK1RjSZSySuuxEVXa.jpg"></image>
+                <image class="slide-image" mode="aspectFill" :src="item.pics_big_url"></image>
             </swiper-item>
         </block>
     </swiper>
      <!-- 2.0 商品价格标题 -->
     <view class="goods-price">
-      ￥ 888
+      ￥ {{ detail.goods_price }}
     </view>
     <view class="goods-info">
       <view class="info-left">
-        我是标题我是标题我是标题我是标题我是标题我是标题我是标题我是标题我是标题我是标题
+        {{ detail.goods_name }}
       </view>
       <view class="info-right">
-        <icon type="search" size="20rpx"></icon>
+        <view class="iconfont icon-shoucang"></view>
         收藏
       </view>
     </view>
@@ -27,8 +27,11 @@
          商品详情标题
        </view>
        <view class="detail-conent" >
-       
-         <view>我是内容分界线</view>
+       <!-- 方法一mpvue 提供的解析富文本 -->
+         <view v-html="detail.goods_introduce"></view> 
+         
+         <!-- 方法二原生小程序解析富文本 -->
+        <!-- <rich-text :nodes="detail.goods_introduce"></rich-text> -->
    
        </view>
     </view>
@@ -39,11 +42,11 @@
         客服盒子，被隐藏起来的
       </view>
       <view class="ft-left">
-        <icon type="search" size="20rpx"></icon>
+        <view class="iconfont icon-kefu"></view>
         联系客服
       </view>
       <view class="ft-left">
-        <icon type="search" size="20rpx"></icon>
+        <view class="iconfont icon-gouwuche"></view>
         购物车
       </view>
       <view class="ft-right">
@@ -58,17 +61,25 @@
 
 <script>
 
+import { getDetail } from "@/api";
 
 export default {
   data () {
      return{
-       goods_id:""
+       goods_id:"",
+       detail:{}
      }
    
   },
   onLoad(query){
-    console.log(query);
-     this.goods_id=query.id;
+     this.goods_id=query.goods_id;
+      // console.log(this.goods_id);
+      getDetail({
+        goods_id:this.goods_id
+      }).then(res=>{
+        // console.log(res);
+         this.detail = res.data.message;
+      })
    }
  
 }
