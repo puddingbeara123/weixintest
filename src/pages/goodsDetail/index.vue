@@ -4,13 +4,14 @@
     <swiper indicator-dots autoplay circular>
         <block v-for="(item,index) in detail.pics" :key="index">
             <swiper-item>
-                <image class="slide-image" mode="aspectFill" :src="item.pics_big_url"></image>
+                <image class="slide-image" mode="aspectFill" :src="item.pics_big_url" @tap="previewBigImage(item.pics_big_url)"></image>
             </swiper-item>
         </block>
     </swiper>
+    
      <!-- 2.0 商品价格标题 -->
     <view class="goods-price">
-      ￥ {{ detail.goods_price }}
+      ￥{{ detail.goods_price }}
     </view>
     <view class="goods-info">
       <view class="info-left">
@@ -28,10 +29,10 @@
        </view>
        <view class="detail-conent" >
        <!-- 方法一mpvue 提供的解析富文本 -->
-         <view v-html="detail.goods_introduce"></view> 
+         <!-- <view v-html="detail.goods_introduce"></view>  -->
          
          <!-- 方法二原生小程序解析富文本 -->
-        <!-- <rich-text :nodes="detail.goods_introduce"></rich-text> -->
+         <rich-text :nodes="detail.goods_introduce"></rich-text> 
    
        </view>
     </view>
@@ -39,17 +40,17 @@
      <!-- 4.0 底部固定条 -->
     <view class="footer">
       <view class="contact">
-        客服盒子，被隐藏起来的
+        <button open-type="contact">打开微信客服聊天</button>
       </view>
       <view class="ft-left">
         <view class="iconfont icon-kefu"></view>
         联系客服
       </view>
-      <view class="ft-left">
+      <navigator url="/pages/cart/main" open-type="switchTab" class="ft-left">
         <view class="iconfont icon-gouwuche"></view>
         购物车
-      </view>
-      <view class="ft-right">
+      </navigator>
+      <view class="ft-right" @tap="addToCart(detail.goods_id)">
         加入购物车
       </view>
       <view class="ft-right">
@@ -67,20 +68,68 @@ export default {
   data () {
      return{
        goods_id:"",
-       detail:{}
+       detail:{},
+ 
      }
    
   },
   onLoad(query){
-     this.goods_id=query.goods_id;
-      // console.log(this.goods_id);
+    // console.log(query)
+     this.goods_id=query.id;
+    //  console.log(this.goods_id);
       getDetail({
         goods_id:this.goods_id
       }).then(res=>{
-        // console.log(res);
+      //  console.log(res);
          this.detail = res.data.message;
+        //  console.log(this.detail)
       })
-   }
+   },
+  methods:{
+    previewBigImage(current){
+      let imgUrls=[];
+      this.detail.pics.forEach(item=>{
+        imgUrls.push(item.pics_big_url);
+      });
+
+      wx.previewImage({
+         current: current, // 当前显示图片的http链接
+         urls: imgUrls // 需要预览的图片http链接列表
+     })
+   },
+   addToCart(id){
+    // 如果没有获取id数据
+     if(!id) return;
+    //  console.log(id)
+  //  console.log(this.detail)
+     wx.showToast({
+       title: '添加成功',
+       icon: 'success',
+       duration: 1000,
+       mask:true,
+   });
+    // 2.0.3 获取本地存储中购物车列表数据
+     const cartList = wx.getStorageSync("cartList") || {};
+     console.log(cartList);
+    // 2.0.4 分两种情况
+    if(cartList[id]){
+       //  2.0.4.1 如果本地存在数据，在原有的 count 上数量 +1
+      console.log("1"+cartList[id]);
+      cartList[id].count++;
+     
+    }else{
+       //  2.0.4.2 假如没有存放商品的记录，count 设为 1
+       cartList[id]=this.detail
+       cartList[id].count=1
+       console.log("2"+cartList)
+    }
+       // 2.0.5 添加或修改选中状态
+       cartList[id].selected=true;
+       // 2.0.6 保存到本地存储
+       wx.setStorageSync('cartList',cartList)
+   },
+ }
+  
  
 }
 </script>
