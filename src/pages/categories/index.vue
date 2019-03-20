@@ -79,6 +79,11 @@ export default {
 </script>
 
 <style>
+.searchInput{
+   position: fixed;
+   width:100%;
+   box-sizing: border-box;
+}
 .scrollAll{
   display:flex;
   position:fixed;
