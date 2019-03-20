@@ -23,7 +23,7 @@
     </view>
     
      <!-- 3.0 搜索提示 -->
-    <view class="search-tips" v-show="true">
+    <view class="search-tips" v-show="inputVal">
       <block v-for="(item,index) in tips" :key="index">
         <view class="search-tips-item" @tap="gotoGoodsDetail(item.goods_id)">
           {{ item.goods_name }}
@@ -58,8 +58,20 @@ export default {
    inputSumbit(){
     //  console.log(this.inputVal)
     this.history.unshift(this.inputVal);
+    //  console.log(this.history)
+    // 除重数组
+    const newHistory = new Set(this.history);
+
+    // console.log(newHistory);
+
+    this.history=[...newHistory];
+    // console.log(this.history)
+
+
     // 1.0.2 把历史存到本地
     wx.setStorageSync('history', this.history);
+    // 1.0.3 跳转到商品列表页
+      wx.redirectTo({ url: '/pages/goodList/main?keyword='+ this.inputVal });
    },
    removeHistory(){
     // 2.0.1 清空视图的数据
