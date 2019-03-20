@@ -94,7 +94,8 @@ export default {
    },
    gotoGoodsDetail(id){
       // 点击跳转商品详情页
-      wx.navigateTo({ url: '/pages/goodsDetail/main?goods_id='+id });
+      // console.log(id);
+      wx.navigateTo({ url: '/pages/goodsDetail/main?id='+id });
    }
  }
 }
