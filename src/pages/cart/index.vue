@@ -1,6 +1,6 @@
 <template>
   <view>
-  <view v-if="cartList">
+  <view v-if="Object.keys(this.cartList).length>0">
     <!-- 1.0 顶部地址选择 -->
     <view class="cart-top" @tap="chooseAddressHandle"> 
          <!-- 1.0.1 用户选择了收货地址的时候展示 -->
