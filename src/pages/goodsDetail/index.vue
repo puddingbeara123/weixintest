@@ -29,10 +29,10 @@
        </view>
        <view class="detail-conent" >
        <!-- 方法一mpvue 提供的解析富文本 -->
-         <!-- <view v-html="detail.goods_introduce"></view>  -->
+          <view v-html="detail.goods_introduce"></view> 
          
          <!-- 方法二原生小程序解析富文本 -->
-         <rich-text :nodes="detail.goods_introduce"></rich-text> 
+         <!-- <rich-text :nodes="detail.goods_introduce"></rich-text>  -->
    
        </view>
     </view>
@@ -73,6 +73,7 @@ export default {
      }
    
   },
+  
   onLoad(query){
     // console.log(query)
      this.goods_id=query.id;
@@ -191,8 +192,10 @@ swiper{
         padding:20rpx;
         border-bottom:1px #eee solid;
     }
-    .detail-content{
+    .detail-conent{
       // 父级字号设置为0，清除富文本图片之间的默认间距
+      border: 0;
+      vertical-align: bottom;
       font-size: 0;
     }
 }
